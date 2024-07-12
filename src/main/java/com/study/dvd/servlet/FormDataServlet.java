@@ -25,6 +25,9 @@ public class FormDataServlet extends HttpServlet {
 			System.out.println(chk);
 		}
 		System.out.println(rdo);
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().println("{\"code\": 200, \"msg\": \"json test\"}");
 	}
 	
 	@Override

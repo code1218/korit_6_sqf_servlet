@@ -5,6 +5,18 @@ function handleSubmitAllClick() {
 	
 	let reqData = {}
 	
+	/**
+		formData1 = {
+			username: "admin",
+			password: "1234"
+		}
+		entries = [ 
+			["username", "admin"], 
+			["password", "1234"] 
+		]
+		
+	 */
+	
 	for(let entry of formData1.entries()) {
 		const [ key, value ] = entry;
 		reqData = {
@@ -12,6 +24,20 @@ function handleSubmitAllClick() {
 			[key]: value
 		}
 	}
+	
+	/**
+		formData2 = {
+			chk: "chk1",
+			chk: "chk2",
+			rdo: "rdo1"
+		}
+		entries = [ 
+			["chk", "chk1"], 
+			["chk", "chk2"], 
+			["rdo", "rdo1"] 
+		]
+		
+	 */
 	
 	let duplicatedKeys = [];
 	let keyCount = {}
@@ -36,9 +62,6 @@ function handleSubmitAllClick() {
 		}
 	}
 	
-	console.log(keyCount);
-	console.log(duplicatedKeys);
-	
 	for(let entry of formData2.entries()) {
 		const [ key, value ] = entry;
 		if(duplicatedKeys.includes(key)) {
@@ -59,8 +82,15 @@ function handleSubmitAllClick() {
 	
 	const queryString = new URLSearchParams(reqData).toString();
 	
-	fetch(`http://localhost:8080/dvd/form?${queryString}`,{
-		method: "get"
+	fetch(`http://localhost:8080/dvd/form?${queryString}`)
+	.then(response => {
+		response.json()
+		.then(data => {
+			const body = document.querySelector("body");
+			body.innerHTML += `<h1>${data.code}</h1>`;
+			body.innerHTML += `<h1>${data.msg}</h1>`;
+			console.log(data);
+		})
 	})
 	
 }
